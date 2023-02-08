@@ -1,17 +1,9 @@
 (ns openldbws-example-clojure.core
-  (:require [taoensso.timbre :as timbre
-              :refer [log trace debug info warn error
-                      fatal report logf tracef debugf infof
-                      warnf errorf fatalf reportf spy
-                      get-env]])
-  (:import (com.thalesgroup.rtti._2013_11_28.token.types AccessToken)
-           (com.thalesgroup.rtti._2021_11_01.ldb GetBoardRequestParams)
-           (com.thalesgroup.rtti._2021_11_01.ldb LDBServiceSoap)
-           (com.thalesgroup.rtti._2021_11_01.ldb Ldb)
-           (com.thalesgroup.rtti._2021_11_01.ldb StationBoardResponseType)
-           (com.thalesgroup.rtti._2021_11_01.ldb.types ServiceItem)
-
-           (org.apache.cxf.endpoint Client))
+  (:require [taoensso.timbre :refer [info infof]])
+  (:import
+    (com.thalesgroup.rtti._2013_11_28.token.types AccessToken)
+    (com.thalesgroup.rtti._2021_11_01.ldb GetBoardRequestParams Ldb LDBServiceSoap GetBoardRequestParams)
+    (com.thalesgroup.rtti._2021_11_01.ldb.types ServiceItem))
   (:gen-class))
 
 (defn -main
@@ -46,19 +38,19 @@
   ;; print informational banner for trains at 'X'
   (infof "Trains at: %s"
          (->
-          departureBoard
-          (.getGetStationBoardResult ,,,)
-          (.getLocationName ,,,)
-          ))
+           departureBoard
+           (.getGetStationBoardResult,,,)
+           (.getLocationName,,,)
+           ))
   (info "===============================================================================")
 
   ;; create list of services from 'X'
   (def services
     (->
-     departureBoard
-     (.getGetStationBoardResult ,,,)
-     (.getTrainServices ,,,)
-     (.getService ,,,)))
+      departureBoard
+      (.getGetStationBoardResult,,,)
+      (.getTrainServices,,,)
+      (.getService,,,)))
 
   ;; iterate over list of services
   (doseq [si services]
@@ -66,17 +58,17 @@
            (.getStd si)
 
            (->
-           si
-           (.getDestination ,,,)
-           (.getLocation ,,,)
-           (.get ,,, 0)
-           (.getLocationName ,,,))
+             si
+             (.getDestination,,,)
+             (.getLocation,,,)
+             (.get,,, 0)
+             (.getLocationName,,,))
 
-          (->
-           si
-           (.getOrigin ,,,)
-           (.getLocation ,,,)
-           (.get ,,, 0)
-           (.getLocationName ,,,))
+           (->
+             si
+             (.getOrigin,,,)
+             (.getLocation,,,)
+             (.get,,, 0)
+             (.getLocationName,,,))
 
-          (.getEtd si))))
+           (.getEtd si))))
